@@ -1,0 +1,298 @@
+{
+  "_meta": {
+    "version": "1.0",
+    "description": "Category-typical features map for L6 Phantom Feature Trace. Each category lists features commonly mentioned across that category's listings on Amazon. Frequency = approximate fraction of listings that mention this feature. AI-generated reviews tend to hallucinate these even when the specific product doesn't have them.",
+    "source": "Manual curation pre-hackathon, validated against ~100 listings per category",
+    "last_updated": "2026-05-26"
+  },
+  "wireless_earbuds": {
+    "active_noise_cancellation": {
+      "frequency": 0.78,
+      "synonyms": ["ANC", "active noise cancelling", "noise cancellation", "active noise canceling"],
+      "category_typical": true
+    },
+    "ENC": {
+      "frequency": 0.55,
+      "synonyms": ["ENC", "environmental noise cancellation", "call noise cancellation", "noise cancellation for calls"],
+      "category_typical": true
+    },
+    "battery_hours_total": {
+      "frequency": 0.95,
+      "synonyms": ["battery life", "playtime", "battery lasts", "hours of playback"],
+      "category_typical": true,
+      "numerical": true
+    },
+    "ipx_rating": {
+      "frequency": 0.62,
+      "synonyms": ["IPX4", "IPX5", "IPX7", "water resistant", "sweat proof", "waterproof"],
+      "category_typical": true
+    },
+    "bluetooth_codec": {
+      "frequency": 0.41,
+      "synonyms": ["aptX", "AAC", "LDAC", "SBC", "codec support"],
+      "category_typical": true
+    },
+    "wireless_charging": {
+      "frequency": 0.45,
+      "synonyms": ["wireless charging", "Qi charging", "wireless charge case"],
+      "category_typical": true
+    },
+    "case_battery": {
+      "frequency": 0.88,
+      "synonyms": ["charging case", "case battery", "with case"],
+      "category_typical": true
+    },
+    "driver_size": {
+      "frequency": 0.38,
+      "synonyms": ["10mm driver", "13mm driver", "dynamic driver"],
+      "category_typical": true,
+      "numerical": true
+    },
+    "bluetooth_version": {
+      "frequency": 0.85,
+      "synonyms": ["Bluetooth 5.0", "Bluetooth 5.2", "Bluetooth 5.3", "BT 5"],
+      "category_typical": true,
+      "numerical": true
+    },
+    "transparency_mode": {
+      "frequency": 0.32,
+      "synonyms": ["transparency mode", "ambient mode", "passthrough mode"],
+      "category_typical": true
+    }
+  },
+  "power_bank": {
+    "capacity_mah": {
+      "frequency": 0.98,
+      "synonyms": ["mAh", "milliamp hours", "capacity"],
+      "category_typical": true,
+      "numerical": true
+    },
+    "fast_charging": {
+      "frequency": 0.82,
+      "synonyms": ["fast charge", "PD", "Power Delivery", "QC", "Quick Charge", "PPS"],
+      "category_typical": true
+    },
+    "usb_c_pd_wattage": {
+      "frequency": 0.71,
+      "synonyms": ["18W", "20W", "30W", "45W", "65W", "100W PD"],
+      "category_typical": true,
+      "numerical": true
+    },
+    "ports_count": {
+      "frequency": 0.88,
+      "synonyms": ["3 ports", "USB ports", "output ports"],
+      "category_typical": true,
+      "numerical": true
+    },
+    "pass_through_charging": {
+      "frequency": 0.34,
+      "synonyms": ["pass through", "charge while charging", "simultaneous charging"],
+      "category_typical": true
+    },
+    "led_indicator": {
+      "frequency": 0.79,
+      "synonyms": ["LED display", "battery indicator", "LED lights", "digital display"],
+      "category_typical": true
+    },
+    "wireless_charging_powerbank": {
+      "frequency": 0.28,
+      "synonyms": ["wireless charging", "magsafe compatible", "Qi"],
+      "category_typical": true
+    },
+    "input_wattage": {
+      "frequency": 0.48,
+      "synonyms": ["recharge input", "input power", "fast recharge"],
+      "category_typical": true
+    },
+    "weight_grams": {
+      "frequency": 0.55,
+      "synonyms": ["lightweight", "compact", "portable", "grams", "ounces"],
+      "category_typical": true,
+      "numerical": true
+    }
+  },
+  "smartwatch": {
+    "heart_rate_monitor": {
+      "frequency": 0.94,
+      "synonyms": ["heart rate", "HR monitor", "BPM", "pulse"],
+      "category_typical": true
+    },
+    "gps": {
+      "frequency": 0.71,
+      "synonyms": ["GPS", "built-in GPS", "navigation", "location tracking"],
+      "category_typical": true
+    },
+    "water_resistance": {
+      "frequency": 0.86,
+      "synonyms": ["5ATM", "IP68", "water resistant", "swim proof"],
+      "category_typical": true
+    },
+    "battery_days": {
+      "frequency": 0.92,
+      "synonyms": ["battery days", "battery life", "lasts days"],
+      "category_typical": true,
+      "numerical": true
+    },
+    "ecg": {
+      "frequency": 0.34,
+      "synonyms": ["ECG", "EKG", "electrocardiogram"],
+      "category_typical": true
+    },
+    "spo2": {
+      "frequency": 0.78,
+      "synonyms": ["SpO2", "blood oxygen", "oxygen saturation"],
+      "category_typical": true
+    },
+    "sleep_tracking": {
+      "frequency": 0.89,
+      "synonyms": ["sleep tracking", "sleep monitor", "sleep stages", "sleep score"],
+      "category_typical": true
+    },
+    "calls_messages": {
+      "frequency": 0.81,
+      "synonyms": ["take calls", "make calls", "answer calls", "send messages", "Bluetooth calling"],
+      "category_typical": true
+    },
+    "always_on_display": {
+      "frequency": 0.52,
+      "synonyms": ["AOD", "always on display", "always-on screen"],
+      "category_typical": true
+    },
+    "amoled_display": {
+      "frequency": 0.41,
+      "synonyms": ["AMOLED", "OLED", "Retina display"],
+      "category_typical": true
+    },
+    "step_counter": {
+      "frequency": 0.96,
+      "synonyms": ["step counter", "pedometer", "activity tracker"],
+      "category_typical": true
+    },
+    "cellular_lte": {
+      "frequency": 0.18,
+      "synonyms": ["LTE", "cellular", "eSIM", "standalone"],
+      "category_typical": true
+    }
+  },
+  "laptop": {
+    "ram_gb": {
+      "frequency": 0.99,
+      "synonyms": ["RAM", "memory", "GB RAM", "DDR4", "DDR5"],
+      "category_typical": true,
+      "numerical": true
+    },
+    "storage_ssd": {
+      "frequency": 0.97,
+      "synonyms": ["SSD", "NVMe", "storage", "GB storage", "TB SSD"],
+      "category_typical": true,
+      "numerical": true
+    },
+    "processor_cpu": {
+      "frequency": 0.98,
+      "synonyms": ["i5", "i7", "i9", "Ryzen", "M1", "M2", "M3", "Core processor"],
+      "category_typical": true
+    },
+    "screen_size": {
+      "frequency": 0.95,
+      "synonyms": ["13 inch", "14 inch", "15.6 inch", "16 inch", "17 inch"],
+      "category_typical": true,
+      "numerical": true
+    },
+    "refresh_rate": {
+      "frequency": 0.62,
+      "synonyms": ["120Hz", "144Hz", "165Hz", "Hz refresh", "refresh rate"],
+      "category_typical": true,
+      "numerical": true
+    },
+    "ports_thunderbolt": {
+      "frequency": 0.58,
+      "synonyms": ["Thunderbolt", "USB-C", "HDMI", "ports"],
+      "category_typical": true
+    },
+    "battery_hours": {
+      "frequency": 0.91,
+      "synonyms": ["battery life", "hours of battery", "all day battery"],
+      "category_typical": true,
+      "numerical": true
+    },
+    "weight_kg": {
+      "frequency": 0.71,
+      "synonyms": ["lightweight", "weighs", "kg", "lbs", "pounds"],
+      "category_typical": true,
+      "numerical": true
+    },
+    "backlit_keyboard": {
+      "frequency": 0.74,
+      "synonyms": ["backlit keyboard", "RGB keyboard", "lit keyboard"],
+      "category_typical": true
+    },
+    "fingerprint_reader": {
+      "frequency": 0.51,
+      "synonyms": ["fingerprint", "biometric", "Touch ID", "Windows Hello"],
+      "category_typical": true
+    },
+    "graphics_gpu": {
+      "frequency": 0.65,
+      "synonyms": ["RTX", "GTX", "Iris Xe", "integrated graphics", "dedicated GPU"],
+      "category_typical": true
+    },
+    "webcam_resolution": {
+      "frequency": 0.43,
+      "synonyms": ["1080p webcam", "HD webcam", "720p webcam", "FHD camera"],
+      "category_typical": true,
+      "numerical": true
+    }
+  },
+  "phone_case": {
+    "drop_protection": {
+      "frequency": 0.91,
+      "synonyms": ["drop protection", "shock absorbing", "rugged", "military grade", "drop tested"],
+      "category_typical": true
+    },
+    "magsafe_compatible": {
+      "frequency": 0.42,
+      "synonyms": ["MagSafe", "magnetic", "magnet ring"],
+      "category_typical": true
+    },
+    "wireless_charging_compatible": {
+      "frequency": 0.78,
+      "synonyms": ["wireless charging compatible", "Qi compatible"],
+      "category_typical": true
+    },
+    "screen_protector_included": {
+      "frequency": 0.31,
+      "synonyms": ["screen protector", "tempered glass included"],
+      "category_typical": true
+    },
+    "color_options": {
+      "frequency": 0.85,
+      "synonyms": ["colors", "color variants", "available in"],
+      "category_typical": true
+    },
+    "material_silicone": {
+      "frequency": 0.62,
+      "synonyms": ["silicone", "TPU", "rubber", "soft material"],
+      "category_typical": true
+    },
+    "material_leather": {
+      "frequency": 0.18,
+      "synonyms": ["leather", "PU leather", "genuine leather"],
+      "category_typical": true
+    },
+    "raised_camera_bezel": {
+      "frequency": 0.71,
+      "synonyms": ["camera protection", "raised lip", "camera bezel"],
+      "category_typical": true
+    },
+    "wallet_card_slot": {
+      "frequency": 0.27,
+      "synonyms": ["card slot", "wallet case", "card holder"],
+      "category_typical": true
+    },
+    "kickstand": {
+      "frequency": 0.21,
+      "synonyms": ["kickstand", "stand", "ring holder"],
+      "category_typical": true
+    }
+  }
+}

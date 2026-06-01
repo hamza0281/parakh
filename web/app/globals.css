@@ -1,0 +1,201 @@
+@import "tailwindcss";
+
+:root {
+  /* Brand Colors — Light Theme */
+  --bg: #FAFAF7;
+  --bg-elevated: #FFFFFF;
+  --surface: #F5F4EE;
+  --surface-warm: #FFF8EE;
+  --ink: #0A0A0B;
+  --ink-soft: #1F1F22;
+  --muted: #6B6B70;
+  --muted-soft: #9A9A9F;
+  --border: #E8E6DD;
+  --border-soft: #F0EEE5;
+
+  /* Accent system */
+  --primary: #0A0A0B;          /* near-black for "Khara" */
+  --danger: #DC2626;           /* fake / khota */
+  --danger-soft: #FEE2E2;
+  --warning: #D97706;
+  --success: #15803D;
+  --gold: #B45309;             /* khara sona accent */
+  --gold-light: #FCD34D;
+
+  /* Gradients */
+  --grad-warm: linear-gradient(135deg, #FFF8EE 0%, #FAFAF7 50%, #F5F4EE 100%);
+  --grad-spotlight: radial-gradient(circle at 50% 0%, rgba(220, 38, 38, 0.08), transparent 60%);
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-elevated: var(--bg-elevated);
+  --color-surface: var(--surface);
+  --color-surface-warm: var(--surface-warm);
+  --color-ink: var(--ink);
+  --color-ink-soft: var(--ink-soft);
+  --color-muted: var(--muted);
+  --color-muted-soft: var(--muted-soft);
+  --color-border: var(--border);
+  --color-border-soft: var(--border-soft);
+  --color-danger: var(--danger);
+  --color-danger-soft: var(--danger-soft);
+  --color-warning: var(--warning);
+  --color-success: var(--success);
+  --color-gold: var(--gold);
+  --color-gold-light: var(--gold-light);
+
+  --font-display: 'Instrument Serif', 'Cormorant Garamond', Georgia, serif;
+  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', ui-monospace, monospace;
+  --font-devanagari: 'Tiro Devanagari Hindi', 'Noto Serif Devanagari', serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Selection */
+::selection {
+  background: var(--ink);
+  color: var(--bg);
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--muted-soft);
+}
+
+/* Typography helpers */
+.font-display {
+  font-family: var(--font-display);
+  letter-spacing: -0.02em;
+  font-weight: 400;
+}
+
+.font-devanagari {
+  font-family: var(--font-devanagari);
+}
+
+.text-balance {
+  text-wrap: balance;
+}
+
+/* Grain overlay (premium feel) */
+.grain::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0.035;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.6 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* Subtle floating dots background animation */
+@keyframes float-up {
+  0%   { transform: translateY(100vh) translateX(0); opacity: 0; }
+  10%  { opacity: 0.5; }
+  90%  { opacity: 0.5; }
+  100% { transform: translateY(-10vh) translateX(40px); opacity: 0; }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+@keyframes pulse-ring {
+  0% { transform: scale(1); opacity: 1; }
+  100% { transform: scale(2.5); opacity: 0; }
+}
+
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+@keyframes draw {
+  to { stroke-dashoffset: 0; }
+}
+
+.animate-fade-up { animation: fade-up 0.8s ease-out both; }
+.animate-shimmer {
+  background: linear-gradient(90deg, transparent 0%, rgba(0,0,0,0.06) 50%, transparent 100%);
+  background-size: 200% 100%;
+  animation: shimmer 2s infinite;
+}
+
+/* Stamp/seal effect for "verified" badges */
+.stamp {
+  transform: rotate(-4deg);
+  border: 2px solid currentColor;
+  padding: 2px 10px;
+  border-radius: 4px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  font-weight: 600;
+  font-size: 0.7rem;
+}
+
+/* Underline draw */
+.underline-draw {
+  background: linear-gradient(currentColor, currentColor) bottom left / 0% 1px no-repeat;
+  transition: background-size 0.4s ease;
+}
+.underline-draw:hover {
+  background-size: 100% 1px;
+}
+
+/* Spotlight gradient on hover */
+.spotlight {
+  position: relative;
+  overflow: hidden;
+}
+.spotlight::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(800px circle at var(--mx, 50%) var(--my, 50%), rgba(220, 38, 38, 0.06), transparent 40%);
+  opacity: 0;
+  transition: opacity 0.4s;
+  pointer-events: none;
+}
+.spotlight:hover::before { opacity: 1; }
+
+/* Magnetic button base */
+.magnetic-btn {
+  transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+/* Crisp focus rings */
+*:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 3px;
+  border-radius: 4px;
+}

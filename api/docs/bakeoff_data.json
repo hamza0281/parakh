@@ -1,0 +1,266 @@
+{
+  "metrics": {
+    "precision": 0.75,
+    "recall": 0.6,
+    "f1": 0.6667,
+    "accuracy": 0.64,
+    "fpr": 0.3,
+    "tp": 9,
+    "tn": 7,
+    "fp": 3,
+    "fn": 6,
+    "total": 25
+  },
+  "results": [
+    {
+      "id": "ai_001",
+      "true_label": 1,
+      "predicted": 1,
+      "flags": 1,
+      "l4_flagged": false,
+      "l6_flagged": true,
+      "top_flag": "Phantom features detected: active noise cancellation",
+      "top_confidence": 0.75
+    },
+    {
+      "id": "ai_002",
+      "true_label": 1,
+      "predicted": 1,
+      "flags": 1,
+      "l4_flagged": false,
+      "l6_flagged": true,
+      "top_flag": "Phantom features detected: active noise cancellation, bluetooth codec",
+      "top_confidence": 0.75
+    },
+    {
+      "id": "ai_003",
+      "true_label": 1,
+      "predicted": 1,
+      "flags": 1,
+      "l4_flagged": false,
+      "l6_flagged": true,
+      "top_flag": "Phantom features detected: active noise cancellation",
+      "top_confidence": 0.75
+    },
+    {
+      "id": "ai_004",
+      "true_label": 1,
+      "predicted": 1,
+      "flags": 1,
+      "l4_flagged": false,
+      "l6_flagged": true,
+      "top_flag": "Phantom features detected: active noise cancellation, bluetooth codec",
+      "top_confidence": 0.75
+    },
+    {
+      "id": "ai_005",
+      "true_label": 1,
+      "predicted": 1,
+      "flags": 1,
+      "l4_flagged": false,
+      "l6_flagged": true,
+      "top_flag": "Phantom features detected: active noise cancellation",
+      "top_confidence": 0.75
+    },
+    {
+      "id": "ai_006",
+      "true_label": 1,
+      "predicted": 0,
+      "flags": 0,
+      "l4_flagged": false,
+      "l6_flagged": false,
+      "top_flag": null,
+      "top_confidence": 0
+    },
+    {
+      "id": "ai_007",
+      "true_label": 1,
+      "predicted": 0,
+      "flags": 0,
+      "l4_flagged": false,
+      "l6_flagged": false,
+      "top_flag": null,
+      "top_confidence": 0
+    },
+    {
+      "id": "ai_008",
+      "true_label": 1,
+      "predicted": 0,
+      "flags": 0,
+      "l4_flagged": false,
+      "l6_flagged": false,
+      "top_flag": null,
+      "top_confidence": 0
+    },
+    {
+      "id": "ai_009",
+      "true_label": 1,
+      "predicted": 0,
+      "flags": 0,
+      "l4_flagged": false,
+      "l6_flagged": false,
+      "top_flag": null,
+      "top_confidence": 0
+    },
+    {
+      "id": "ai_010",
+      "true_label": 1,
+      "predicted": 0,
+      "flags": 0,
+      "l4_flagged": false,
+      "l6_flagged": false,
+      "top_flag": null,
+      "top_confidence": 0
+    },
+    {
+      "id": "ai_011",
+      "true_label": 1,
+      "predicted": 1,
+      "flags": 1,
+      "l4_flagged": false,
+      "l6_flagged": false,
+      "top_flag": "Part of cluster of 4 similar reviews",
+      "top_confidence": 0.8678
+    },
+    {
+      "id": "ai_012",
+      "true_label": 1,
+      "predicted": 0,
+      "flags": 0,
+      "l4_flagged": false,
+      "l6_flagged": false,
+      "top_flag": null,
+      "top_confidence": 0
+    },
+    {
+      "id": "ai_013",
+      "true_label": 1,
+      "predicted": 1,
+      "flags": 1,
+      "l4_flagged": false,
+      "l6_flagged": false,
+      "top_flag": "Part of cluster of 4 similar reviews",
+      "top_confidence": 0.8678
+    },
+    {
+      "id": "ai_014",
+      "true_label": 1,
+      "predicted": 1,
+      "flags": 1,
+      "l4_flagged": false,
+      "l6_flagged": false,
+      "top_flag": "Part of cluster of 4 similar reviews",
+      "top_confidence": 0.8678
+    },
+    {
+      "id": "ai_015",
+      "true_label": 1,
+      "predicted": 1,
+      "flags": 1,
+      "l4_flagged": false,
+      "l6_flagged": false,
+      "top_flag": "Part of cluster of 4 similar reviews",
+      "top_confidence": 0.8678
+    },
+    {
+      "id": "human_001",
+      "true_label": 0,
+      "predicted": 0,
+      "flags": 0,
+      "l4_flagged": false,
+      "l6_flagged": false,
+      "top_flag": null,
+      "top_confidence": 0
+    },
+    {
+      "id": "human_002",
+      "true_label": 0,
+      "predicted": 1,
+      "flags": 1,
+      "l4_flagged": false,
+      "l6_flagged": true,
+      "top_flag": "Phantom features detected: active noise cancellation",
+      "top_confidence": 0.75
+    },
+    {
+      "id": "human_003",
+      "true_label": 0,
+      "predicted": 0,
+      "flags": 0,
+      "l4_flagged": false,
+      "l6_flagged": false,
+      "top_flag": null,
+      "top_confidence": 0
+    },
+    {
+      "id": "human_004",
+      "true_label": 0,
+      "predicted": 0,
+      "flags": 0,
+      "l4_flagged": false,
+      "l6_flagged": false,
+      "top_flag": null,
+      "top_confidence": 0
+    },
+    {
+      "id": "human_005",
+      "true_label": 0,
+      "predicted": 0,
+      "flags": 0,
+      "l4_flagged": false,
+      "l6_flagged": false,
+      "top_flag": null,
+      "top_confidence": 0
+    },
+    {
+      "id": "human_006",
+      "true_label": 0,
+      "predicted": 1,
+      "flags": 1,
+      "l4_flagged": false,
+      "l6_flagged": true,
+      "top_flag": "Phantom features detected: usb c pd wattage, weight grams",
+      "top_confidence": 0.75
+    },
+    {
+      "id": "human_007",
+      "true_label": 0,
+      "predicted": 1,
+      "flags": 1,
+      "l4_flagged": false,
+      "l6_flagged": true,
+      "top_flag": "Phantom features detected: weight grams",
+      "top_confidence": 0.75
+    },
+    {
+      "id": "human_008",
+      "true_label": 0,
+      "predicted": 0,
+      "flags": 0,
+      "l4_flagged": false,
+      "l6_flagged": false,
+      "top_flag": null,
+      "top_confidence": 0
+    },
+    {
+      "id": "human_009",
+      "true_label": 0,
+      "predicted": 0,
+      "flags": 0,
+      "l4_flagged": false,
+      "l6_flagged": false,
+      "top_flag": null,
+      "top_confidence": 0
+    },
+    {
+      "id": "human_010",
+      "true_label": 0,
+      "predicted": 0,
+      "flags": 0,
+      "l4_flagged": false,
+      "l6_flagged": false,
+      "top_flag": null,
+      "top_confidence": 0
+    }
+  ]
+}

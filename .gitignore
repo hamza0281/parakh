@@ -1,0 +1,97 @@
+# ============================================
+# SECRETS — NEVER COMMIT THESE
+# ============================================
+.env
+.env.local
+.env.production
+.env.*.local
+*.env
+
+# ============================================
+# Node / Next.js
+# ============================================
+node_modules/
+.next/
+out/
+dist/
+build/
+.turbo/
+*.tsbuildinfo
+.vercel/
+
+# ============================================
+# Python / FastAPI
+# ============================================
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyc
+.venv/
+venv/
+env/
+.Python
+*.egg-info/
+dist/
+build/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+htmlcov/
+.coverage
+
+# ============================================
+# ML Models (large files — don't commit)
+# ============================================
+*.bin
+*.safetensors
+*.gguf
+*.ggml
+models/
+model_cache/
+.cache/huggingface/
+
+# ============================================
+# Datasets (large files — don't commit)
+# ============================================
+datasets-placeholder/
+*.jsonl.gz
+*.json.gz
+*.parquet
+*.csv.gz
+
+# ============================================
+# OS / Editor
+# ============================================
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/settings.json
+*.swp
+*.swo
+
+# ============================================
+# Logs
+# ============================================
+*.log
+logs/
+npm-debug.log*
+pnpm-debug.log*
+
+# ============================================
+# Docker
+# ============================================
+.docker/
+
+# ============================================
+# Misc
+# ============================================
+.parcel-cache/
+.eslintcache
+
+# ============================================
+# Planning / Hackathon prep files (not for repo)
+# ============================================
+../01_PROJECT_DETAILS.md
+../02_USER_WORKFLOW.md
+../03_BUILD_PLAN.md
+../parakh-prep/
