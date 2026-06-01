@@ -1,16 +1,26 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { ArrowRight, Sparkles, Star } from "lucide-react";
-import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { ArrowRight, Sparkles, Star, ShieldCheck, Zap, Eye } from "lucide-react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
+
+const ROTATING_WORDS = ["fake reviews", "phantom features", "AI hallucinations", "review farms", "5-star lies"];
 
 export default function Hero() {
   const [url, setUrl] = useState("");
   const [focused, setFocused] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [feedback, setFeedback] = useState<{ kind: "ok" | "err"; msg: string } | null>(null);
+  const [wordIndex, setWordIndex] = useState(0);
   const router = useRouter();
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setWordIndex((i) => (i + 1) % ROTATING_WORDS.length);
+    }, 2200);
+    return () => clearInterval(interval);
+  }, []);
 
   async function onSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -25,52 +35,61 @@ export default function Hero() {
     }
     setSubmitting(true);
     setFeedback(null);
-    // Navigate to results page — analysis happens there
     const encoded = encodeURIComponent(trimmed);
     router.push(`/scan?url=${encoded}`);
   }
 
   return (
-    <section
-      id="scan"
-      className="relative pt-16 pb-32 px-6 overflow-hidden"
-    >
+    <section id="scan" className="relative pt-14 pb-32 px-6 overflow-hidden">
       <div className="max-w-6xl mx-auto">
-        {/* Eyebrow */}
+        {/* Eyebrow badge */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
           className="flex justify-center mb-8"
         >
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white border border-[var(--border)] text-xs">
+          <div className="group inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/80 backdrop-blur border border-[var(--border)] text-xs shadow-sm">
             <span className="relative flex w-1.5 h-1.5">
               <span className="absolute inline-flex w-full h-full rounded-full bg-[var(--danger)] opacity-50 animate-ping" />
               <span className="relative inline-flex w-1.5 h-1.5 rounded-full bg-[var(--danger)]" />
             </span>
             <span className="text-[var(--ink-soft)] tracking-wide">
-              <span className="text-[var(--danger)] font-semibold">3%</span> of Amazon front-page reviews are AI-generated
+              <span className="text-[var(--danger)] font-semibold">1 in 3</span> top Amazon reviews may be AI-generated
             </span>
           </div>
         </motion.div>
 
-        {/* Main heading */}
+        {/* Main heading — English, high-impact */}
         <motion.h1
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.1 }}
-          className="font-display text-center text-[clamp(3rem,9vw,7.5rem)] leading-[0.95] tracking-tight text-balance"
+          className="font-display text-center text-[clamp(2.8rem,8vw,6.5rem)] leading-[0.98] tracking-tight text-balance"
         >
-          <span className="block text-[var(--ink)]">Reviews ki</span>
-          <span className="relative inline-block">
-            <span className="relative z-10 italic font-display text-[var(--gold)]">
-              Parakh
-            </span>
-            <UnderlineSwoosh />
+          <span className="block text-[var(--ink)]">Stop trusting</span>
+          <span className="relative inline-block min-h-[1.1em]">
+            <AnimatePresence mode="wait">
+              <motion.span
+                key={wordIndex}
+                initial={{ opacity: 0, y: 30, rotateX: -40 }}
+                animate={{ opacity: 1, y: 0, rotateX: 0 }}
+                exit={{ opacity: 0, y: -30, rotateX: 40 }}
+                transition={{ duration: 0.5, ease: "easeOut" }}
+                className="inline-block italic font-display text-[var(--danger)]"
+                style={{ transformStyle: "preserve-3d" }}
+              >
+                {ROTATING_WORDS[wordIndex]}.
+              </motion.span>
+            </AnimatePresence>
           </span>
-          <span className="block text-[var(--ink-soft)] mt-2">
-            Khara <span className="text-[var(--muted)]">ya</span>{" "}
-            <span className="text-[var(--danger)] italic">Khota?</span>
+          <span className="block text-[var(--ink-soft)] mt-1">
+            See what&apos;s{" "}
+            <span className="relative inline-block">
+              <span className="relative z-10 italic text-[var(--gold)]">real</span>
+              <UnderlineSwoosh />
+            </span>
+            .
           </span>
         </motion.h1>
 
@@ -81,23 +100,46 @@ export default function Hero() {
           transition={{ duration: 0.6, delay: 0.3 }}
           className="mt-10 text-center text-lg md:text-xl text-[var(--muted)] max-w-2xl mx-auto leading-relaxed text-balance"
         >
-          We don&apos;t ask <em className="text-[var(--ink-soft)]">&ldquo;was this written by AI?&rdquo;</em> &mdash; that&apos;s a coin flip. <br className="hidden md:block" />
-          We ask <strong className="text-[var(--ink)] font-semibold">&ldquo;does this review claim things that don&apos;t exist?&rdquo;</strong>
+          Most tools ask <em className="text-[var(--ink-soft)]">&ldquo;was this written by AI?&rdquo;</em> — a coin flip.{" "}
+          <strong className="text-[var(--ink)] font-semibold">Parakh</strong> asks{" "}
+          <strong className="text-[var(--ink)] font-semibold">&ldquo;does this review claim things the product doesn&apos;t even have?&rdquo;</strong>
         </motion.p>
+
+        {/* Feature pills */}
+        <motion.div
+          initial={{ opacity: 0, y: 15 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.4 }}
+          className="mt-7 flex flex-wrap items-center justify-center gap-2.5"
+        >
+          {[
+            { icon: ShieldCheck, label: "5-layer detection engine" },
+            { icon: Zap, label: "Results in ~8 seconds" },
+            { icon: Eye, label: "Reverse-engineers AI prompts" },
+          ].map((pill) => (
+            <span
+              key={pill.label}
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/70 backdrop-blur border border-[var(--border)] text-xs text-[var(--ink-soft)]"
+            >
+              <pill.icon className="w-3.5 h-3.5 text-[var(--gold)]" />
+              {pill.label}
+            </span>
+          ))}
+        </motion.div>
 
         {/* URL input */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.5 }}
-          className="mt-14 max-w-2xl mx-auto"
+          className="mt-12 max-w-2xl mx-auto"
         >
           <form
             onSubmit={onSubmit}
             className={`relative flex items-center gap-2 p-2 pl-5 rounded-2xl bg-white border-2 transition-all duration-300 ${
               focused
-                ? "border-[var(--ink)] shadow-[0_20px_50px_-12px_rgba(0,0,0,0.15)]"
-                : "border-[var(--border)] shadow-[0_8px_30px_rgba(0,0,0,0.04)]"
+                ? "border-[var(--ink)] shadow-[0_20px_50px_-12px_rgba(0,0,0,0.18)]"
+                : "border-[var(--border)] shadow-[0_8px_30px_rgba(0,0,0,0.06)]"
             }`}
           >
             <Sparkles className="w-4 h-4 text-[var(--muted)] flex-shrink-0" />
@@ -116,10 +158,8 @@ export default function Hero() {
               disabled={submitting}
               className="group inline-flex items-center gap-1.5 px-5 h-11 rounded-xl bg-[var(--ink)] text-white text-sm font-medium hover:bg-[var(--ink-soft)] transition-all shrink-0 disabled:opacity-60 disabled:cursor-not-allowed"
             >
-              <span>{submitting ? "Checking…" : "Parakh karo"}</span>
-              {!submitting && (
-                <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5" />
-              )}
+              <span>{submitting ? "Scanning…" : "Scan reviews"}</span>
+              {!submitting && <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5" />}
             </button>
           </form>
 
@@ -137,7 +177,7 @@ export default function Hero() {
 
           {/* Demo buttons */}
           <div className="mt-5 flex flex-wrap items-center justify-center gap-2 text-sm">
-            <span className="text-[var(--muted)] mr-1">Or try a demo:</span>
+            <span className="text-[var(--muted)] mr-1">No URL? Try a live demo:</span>
             {[
               { label: "Earbuds", id: "zen-sound-pro" },
               { label: "Power Bank", id: "power-max" },
@@ -183,7 +223,7 @@ export default function Hero() {
           <span className="hidden md:inline w-px h-3 bg-[var(--border)]" />
           <span className="inline-flex items-center gap-2">
             <span className="w-1 h-1 rounded-full bg-[var(--success)]" />
-            MIT licensed, source on GitHub
+            Open source, MIT licensed
           </span>
         </motion.div>
       </div>
@@ -202,7 +242,7 @@ function UnderlineSwoosh() {
     >
       <motion.path
         d="M2 14 Q75 2, 150 10 T298 6"
-        stroke="rgba(220, 38, 38, 0.6)"
+        stroke="rgba(180, 83, 9, 0.6)"
         strokeWidth="3"
         strokeLinecap="round"
         fill="none"
@@ -217,14 +257,13 @@ function UnderlineSwoosh() {
 function ScorePreview() {
   return (
     <div className="relative max-w-4xl mx-auto">
-      {/* Floating browser chrome */}
       <div className="rounded-2xl bg-white border border-[var(--border)] overflow-hidden shadow-[0_30px_60px_-20px_rgba(0,0,0,0.15)]">
         {/* Browser bar */}
         <div className="flex items-center gap-3 px-4 py-3 border-b border-[var(--border-soft)] bg-[var(--surface)]">
           <div className="flex gap-1.5">
-            <span className="w-2.5 h-2.5 rounded-full bg-[var(--border)]" />
-            <span className="w-2.5 h-2.5 rounded-full bg-[var(--border)]" />
-            <span className="w-2.5 h-2.5 rounded-full bg-[var(--border)]" />
+            <span className="w-2.5 h-2.5 rounded-full bg-[#FF5F57]" />
+            <span className="w-2.5 h-2.5 rounded-full bg-[#FEBC2E]" />
+            <span className="w-2.5 h-2.5 rounded-full bg-[#28C840]" />
           </div>
           <div className="flex-1 px-3 py-1.5 rounded-md bg-[var(--bg-elevated)] text-xs text-[var(--muted)] font-mono">
             parakh.app/scan/zen-sound-pro

@@ -4,44 +4,36 @@ import { motion, useScroll, useTransform, useMotionValue, useSpring } from "fram
 import { useEffect } from "react";
 
 /**
- * AmbientBackground — Premium animated background, clearly visible.
+ * AmbientBackground — 3D Animated Background
  *
- * Layers (back to front):
+ * Genuine 3D objects built with CSS 3D transforms (perspective + rotateX/Y/Z):
  *  1. Vibrant gradient mesh base
- *  2. 5 animated breathing color blobs (gold, red, blue, emerald, peach)
- *  3. Aurora-like flowing wave (SVG)
- *  4. Animated diagonal stripe pattern
- *  5. Visible dot grid with depth
- *  6. Floating review cards (peripheral, animated)
- *  7. Drifting star ratings (★) and X marks (✕)
- *  8. Scanning beam pulse (every 6s)
- *  9. Cursor-following spotlight
+ *  2. Floating 3D cubes (6 faces, rotating in 3D space)
+ *  3. Tilted 3D review cards (fake/real, floating with depth)
+ *  4. 3D gradient spheres with shading
+ *  5. Perspective grid floor
+ *  6. Scanning beam
+ *  7. Cursor-reactive parallax tilt
  */
 export default function AmbientBackground() {
   const { scrollY } = useScroll();
-  const yOrb1 = useTransform(scrollY, [0, 1500], [0, -300]);
-  const yOrb2 = useTransform(scrollY, [0, 1500], [0, 250]);
-  const yOrb3 = useTransform(scrollY, [0, 1500], [0, -150]);
+  const yFloat1 = useTransform(scrollY, [0, 1500], [0, -200]);
+  const yFloat2 = useTransform(scrollY, [0, 1500], [0, 160]);
 
-  const mx = useMotionValue(50);
-  const my = useMotionValue(20);
-  const smoothMx = useSpring(mx, { stiffness: 50, damping: 20 });
-  const smoothMy = useSpring(my, { stiffness: 50, damping: 20 });
+  // Cursor-reactive scene tilt
+  const mx = useMotionValue(0);
+  const my = useMotionValue(0);
+  const tiltX = useSpring(useTransform(my, [-0.5, 0.5], [8, -8]), { stiffness: 50, damping: 20 });
+  const tiltY = useSpring(useTransform(mx, [-0.5, 0.5], [-8, 8]), { stiffness: 50, damping: 20 });
 
   useEffect(() => {
     const handle = (e: MouseEvent) => {
-      mx.set((e.clientX / window.innerWidth) * 100);
-      my.set((e.clientY / window.innerHeight) * 100);
+      mx.set(e.clientX / window.innerWidth - 0.5);
+      my.set(e.clientY / window.innerHeight - 0.5);
     };
     window.addEventListener("mousemove", handle);
     return () => window.removeEventListener("mousemove", handle);
   }, [mx, my]);
-
-  const spotlightBg = useTransform(
-    [smoothMx, smoothMy],
-    ([x, y]) =>
-      `radial-gradient(700px circle at ${x}% ${y}%, rgba(220, 38, 38, 0.15), transparent 50%)`
-  );
 
   return (
     <div aria-hidden className="fixed inset-0 -z-10 overflow-hidden pointer-events-none">
@@ -50,166 +42,83 @@ export default function AmbientBackground() {
         className="absolute inset-0"
         style={{
           background: `
-            radial-gradient(ellipse 1200px 800px at 15% 10%, rgba(252, 211, 77, 0.45), transparent 55%),
-            radial-gradient(ellipse 1000px 700px at 90% 20%, rgba(252, 165, 165, 0.40), transparent 55%),
-            radial-gradient(ellipse 1100px 800px at 85% 80%, rgba(196, 181, 253, 0.40), transparent 55%),
-            radial-gradient(ellipse 900px 700px at 10% 90%, rgba(167, 243, 208, 0.40), transparent 55%),
-            radial-gradient(ellipse 800px 600px at 50% 50%, rgba(254, 240, 138, 0.30), transparent 60%),
-            linear-gradient(180deg, #FFFCF4 0%, #FFF4E6 100%)
+            radial-gradient(ellipse 1100px 700px at 12% 8%, rgba(252, 211, 77, 0.40), transparent 55%),
+            radial-gradient(ellipse 900px 650px at 88% 15%, rgba(248, 113, 113, 0.32), transparent 55%),
+            radial-gradient(ellipse 1000px 750px at 85% 85%, rgba(167, 139, 250, 0.32), transparent 55%),
+            radial-gradient(ellipse 850px 650px at 8% 92%, rgba(110, 231, 183, 0.32), transparent 55%),
+            linear-gradient(180deg, #FFFDF7 0%, #FBF4E9 100%)
           `,
         }}
       />
 
-      {/* ── 2. Breathing animated blobs ───────────────────────────── */}
+      {/* ── 3D Scene (perspective container, cursor-reactive) ──────── */}
       <motion.div
-        style={{ y: yOrb1 }}
-        className="absolute -top-40 -left-32 w-[700px] h-[700px] rounded-full blur-[100px]"
-        animate={{
-          scale: [1, 1.25, 1],
-          opacity: [0.7, 1, 0.7],
-        }}
-        transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-      >
-        <div
-          className="w-full h-full rounded-full"
-          style={{ background: "radial-gradient(circle, rgba(252, 211, 77, 0.55), transparent 70%)" }}
-        />
-      </motion.div>
-
-      <motion.div
-        style={{ y: yOrb2 }}
-        className="absolute top-[20%] -right-32 w-[600px] h-[600px] rounded-full blur-[100px]"
-        animate={{
-          scale: [1.1, 1, 1.1],
-          opacity: [0.5, 0.8, 0.5],
-        }}
-        transition={{ duration: 10, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-      >
-        <div
-          className="w-full h-full rounded-full"
-          style={{ background: "radial-gradient(circle, rgba(248, 113, 113, 0.40), transparent 70%)" }}
-        />
-      </motion.div>
-
-      <motion.div
-        style={{ y: yOrb3 }}
-        className="absolute top-[55%] left-[10%] w-[700px] h-[700px] rounded-full blur-[120px]"
-        animate={{
-          scale: [1, 1.2, 1],
-          opacity: [0.4, 0.7, 0.4],
-        }}
-        transition={{ duration: 12, repeat: Infinity, ease: "easeInOut", delay: 3 }}
-      >
-        <div
-          className="w-full h-full rounded-full"
-          style={{ background: "radial-gradient(circle, rgba(147, 197, 253, 0.45), transparent 70%)" }}
-        />
-      </motion.div>
-
-      <motion.div
-        className="absolute top-[60%] right-[15%] w-[500px] h-[500px] rounded-full blur-[100px]"
-        animate={{
-          scale: [1.15, 1, 1.15],
-          opacity: [0.4, 0.6, 0.4],
-        }}
-        transition={{ duration: 9, repeat: Infinity, ease: "easeInOut", delay: 2 }}
-      >
-        <div
-          className="w-full h-full rounded-full"
-          style={{ background: "radial-gradient(circle, rgba(134, 239, 172, 0.45), transparent 70%)" }}
-        />
-      </motion.div>
-
-      <motion.div
-        className="absolute top-[10%] right-[30%] w-[400px] h-[400px] rounded-full blur-[80px]"
-        animate={{
-          scale: [1, 1.15, 1],
-          opacity: [0.5, 0.8, 0.5],
-        }}
-        transition={{ duration: 7, repeat: Infinity, ease: "easeInOut", delay: 4 }}
-      >
-        <div
-          className="w-full h-full rounded-full"
-          style={{ background: "radial-gradient(circle, rgba(253, 186, 116, 0.50), transparent 70%)" }}
-        />
-      </motion.div>
-
-      {/* ── 3. Aurora flowing wave (SVG) ──────────────────────────── */}
-      <AuroraWave />
-
-      {/* ── 4. Animated diagonal stripe pattern ───────────────────── */}
-      <div
-        className="absolute inset-0 opacity-[0.06]"
+        className="absolute inset-0"
         style={{
-          backgroundImage:
-            "repeating-linear-gradient(45deg, rgba(10,10,11,0) 0px, rgba(10,10,11,0) 14px, rgba(10,10,11,0.8) 14px, rgba(10,10,11,0.8) 15px)",
-          animation: "stripe-shift 30s linear infinite",
+          perspective: 1200,
+          transformStyle: "preserve-3d",
+          rotateX: tiltX,
+          rotateY: tiltY,
+        }}
+      >
+        {/* Floating 3D cubes */}
+        <motion.div style={{ y: yFloat1 }} className="absolute" >
+          <Cube left="8%" top="22%" size={70} colorA="#FCD34D" colorB="#F59E0B" duration={16} delay={0} />
+          <Cube left="82%" top="30%" size={90} colorA="#FCA5A5" colorB="#DC2626" duration={20} delay={2} />
+          <Cube left="70%" top="68%" size={55} colorA="#A78BFA" colorB="#7C3AED" duration={18} delay={1} />
+        </motion.div>
+        <motion.div style={{ y: yFloat2 }} className="absolute">
+          <Cube left="16%" top="70%" size={64} colorA="#6EE7B7" colorB="#059669" duration={22} delay={3} />
+          <Cube left="46%" top="14%" size={44} colorA="#93C5FD" colorB="#2563EB" duration={15} delay={1.5} />
+        </motion.div>
+
+        {/* 3D gradient spheres */}
+        <Sphere left="28%" top="40%" size={120} color="rgba(252, 211, 77, 0.5)" duration={9} delay={0} />
+        <Sphere left="62%" top="48%" size={150} color="rgba(248, 113, 113, 0.35)" duration={11} delay={2} />
+        <Sphere left="40%" top="78%" size={100} color="rgba(167, 139, 250, 0.4)" duration={13} delay={4} />
+
+        {/* Tilted 3D review cards */}
+        <motion.div style={{ y: yFloat1 }}>
+          <Card3D left="4%" top="48%" stars={5} text="Best ANC ever!" fake rotateY={22} rotateX={-8} duration={14} delay={0} />
+          <Card3D left="80%" top="55%" stars={4} text="Battery as advertised" rotateY={-20} rotateX={6} duration={17} delay={3} />
+        </motion.div>
+        <motion.div style={{ y: yFloat2 }}>
+          <Card3D left="74%" top="12%" stars={5} text="30-hour battery!" fake rotateY={-15} rotateX={-10} duration={16} delay={5} />
+          <Card3D left="10%" top="84%" stars={4} text="Solid for the price" rotateY={18} rotateX={8} duration={19} delay={2} />
+        </motion.div>
+      </motion.div>
+
+      {/* ── Perspective grid floor ─────────────────────────────────── */}
+      <div
+        className="absolute bottom-0 left-0 right-0 h-[40vh] opacity-[0.10]"
+        style={{
+          background: `
+            linear-gradient(rgba(10,10,11,0.5) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(10,10,11,0.5) 1px, transparent 1px)
+          `,
+          backgroundSize: "50px 50px",
+          transform: "perspective(400px) rotateX(60deg)",
+          transformOrigin: "bottom",
+          maskImage: "linear-gradient(to top, black, transparent)",
+          WebkitMaskImage: "linear-gradient(to top, black, transparent)",
         }}
       />
 
-      {/* ── 5. Visible dot grid ──────────────────────────────────── */}
-      <div className="absolute inset-0 opacity-50">
-        <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
-          <defs>
-            <pattern id="dots" width="32" height="32" patternUnits="userSpaceOnUse">
-              <circle cx="2" cy="2" r="1.3" fill="rgba(10, 10, 11, 0.18)" />
-            </pattern>
-            <radialGradient id="dotsFade" cx="50%" cy="40%" r="70%">
-              <stop offset="0%" stopColor="white" stopOpacity="0.9" />
-              <stop offset="100%" stopColor="white" stopOpacity="0" />
-            </radialGradient>
-            <mask id="dotsMask">
-              <rect width="100%" height="100%" fill="url(#dotsFade)" />
-            </mask>
-          </defs>
-          <rect width="100%" height="100%" fill="url(#dots)" mask="url(#dotsMask)" />
-        </svg>
-      </div>
-
-      {/* ── 6. Floating review cards (peripheral) ─────────────────── */}
-      <FloatingReviews />
-
-      {/* ── 7. Drifting stars and X marks ─────────────────────────── */}
-      <FloatingMarks />
-
-      {/* ── 8. Scanning beam ─────────────────────────────────────── */}
+      {/* ── Scanning beam ──────────────────────────────────────────── */}
       <ScanBeam />
 
-      {/* ── 9. Cursor spotlight ──────────────────────────────────── */}
-      <motion.div className="absolute inset-0" style={{ background: spotlightBg }} />
-
       <style jsx global>{`
-        @keyframes stripe-shift {
-          0% { background-position: 0 0; }
-          100% { background-position: 200px 0; }
+        @keyframes cube-spin {
+          0% { transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg); }
+          100% { transform: rotateX(360deg) rotateY(360deg) rotateZ(120deg); }
         }
-        @keyframes aurora-flow {
-          0%, 100% { transform: translateX(0) skewY(-2deg); }
-          50% { transform: translateX(-50px) skewY(2deg); }
+        @keyframes float-y {
+          0%, 100% { transform: translateY(0px); }
+          50% { transform: translateY(-30px); }
         }
-        @keyframes mark-float-a {
-          0% { transform: translateY(0) translateX(0) rotate(0deg); opacity: 0; }
-          10% { opacity: 1; }
-          90% { opacity: 1; }
-          100% { transform: translateY(-110vh) translateX(40px) rotate(360deg); opacity: 0; }
-        }
-        @keyframes mark-float-b {
-          0% { transform: translateY(0) translateX(0) rotate(0deg); opacity: 0; }
-          10% { opacity: 1; }
-          90% { opacity: 1; }
-          100% { transform: translateY(-110vh) translateX(-50px) rotate(-300deg); opacity: 0; }
-        }
-        @keyframes mark-float-c {
-          0% { transform: translateY(0) translateX(0) rotate(0deg); opacity: 0; }
-          10% { opacity: 1; }
-          90% { opacity: 1; }
-          100% { transform: translateY(-110vh) translateX(20px) rotate(540deg); opacity: 0; }
-        }
-        @keyframes review-drift {
-          0% { transform: translateY(20px) translateX(-10px); opacity: 0; }
-          15% { opacity: 1; }
-          85% { opacity: 1; }
-          100% { transform: translateY(-100px) translateX(20px); opacity: 0; }
+        @keyframes card-float {
+          0%, 100% { transform: translateY(0px) rotateY(var(--ry)) rotateX(var(--rx)); }
+          50% { transform: translateY(-25px) rotateY(calc(var(--ry) + 6deg)) rotateX(var(--rx)); }
         }
       `}</style>
     </div>
@@ -217,181 +126,135 @@ export default function AmbientBackground() {
 }
 
 // ────────────────────────────────────────────────────────────────────
-// Aurora wave — flowing SVG gradient that moves
+// 3D Cube — 6 faces with gradient, spinning in 3D
 // ────────────────────────────────────────────────────────────────────
-function AuroraWave() {
+function Cube({
+  left, top, size, colorA, colorB, duration, delay,
+}: {
+  left: string; top: string; size: number; colorA: string; colorB: string; duration: number; delay: number;
+}) {
+  const half = size / 2;
+  const faceStyle = (bg: string): React.CSSProperties => ({
+    position: "absolute",
+    width: size,
+    height: size,
+    background: `linear-gradient(135deg, ${colorA}, ${colorB})`,
+    border: `1px solid ${colorA}`,
+    opacity: 0.55,
+    boxShadow: `inset 0 0 30px ${colorB}`,
+  });
+
   return (
-    <div className="absolute inset-0 opacity-60">
-      <svg
-        className="absolute inset-0 w-full h-full"
-        viewBox="0 0 1440 900"
-        preserveAspectRatio="none"
-        xmlns="http://www.w3.org/2000/svg"
+    <div
+      className="absolute"
+      style={{ left, top, width: size, height: size, animation: `float-y ${duration * 0.6}s ease-in-out ${delay}s infinite` }}
+    >
+      <div
+        style={{
+          width: size,
+          height: size,
+          position: "relative",
+          transformStyle: "preserve-3d",
+          animation: `cube-spin ${duration}s linear ${delay}s infinite`,
+          filter: "blur(0.5px)",
+        }}
       >
-        <defs>
-          <linearGradient id="aurora-grad" x1="0%" y1="0%" x2="100%" y2="0%">
-            <stop offset="0%" stopColor="rgba(252, 211, 77, 0.5)" />
-            <stop offset="33%" stopColor="rgba(248, 113, 113, 0.4)" />
-            <stop offset="66%" stopColor="rgba(196, 181, 253, 0.4)" />
-            <stop offset="100%" stopColor="rgba(134, 239, 172, 0.4)" />
-          </linearGradient>
-          <filter id="aurora-blur">
-            <feGaussianBlur stdDeviation="40" />
-          </filter>
-        </defs>
-        <motion.path
-          d="M 0 450 Q 360 350 720 450 T 1440 450 L 1440 900 L 0 900 Z"
-          fill="url(#aurora-grad)"
-          filter="url(#aurora-blur)"
-          animate={{
-            d: [
-              "M 0 450 Q 360 350 720 450 T 1440 450 L 1440 900 L 0 900 Z",
-              "M 0 480 Q 360 380 720 420 T 1440 480 L 1440 900 L 0 900 Z",
-              "M 0 430 Q 360 530 720 480 T 1440 430 L 1440 900 L 0 900 Z",
-              "M 0 450 Q 360 350 720 450 T 1440 450 L 1440 900 L 0 900 Z",
-            ],
-          }}
-          transition={{ duration: 14, repeat: Infinity, ease: "easeInOut" }}
-        />
-      </svg>
+        <div style={{ ...faceStyle(colorA), transform: `translateZ(${half}px)` }} />
+        <div style={{ ...faceStyle(colorA), transform: `rotateY(180deg) translateZ(${half}px)` }} />
+        <div style={{ ...faceStyle(colorA), transform: `rotateY(90deg) translateZ(${half}px)` }} />
+        <div style={{ ...faceStyle(colorA), transform: `rotateY(-90deg) translateZ(${half}px)` }} />
+        <div style={{ ...faceStyle(colorA), transform: `rotateX(90deg) translateZ(${half}px)` }} />
+        <div style={{ ...faceStyle(colorA), transform: `rotateX(-90deg) translateZ(${half}px)` }} />
+      </div>
     </div>
   );
 }
 
 // ────────────────────────────────────────────────────────────────────
-// Floating review cards — small peripheral cards drifting up
+// 3D Sphere — radial gradient with shading + float
 // ────────────────────────────────────────────────────────────────────
-const REVIEW_CARDS = [
-  { stars: 5, text: "Best ANC ever!", isFake: true, x: 4, top: 60, delay: 0 },
-  { stars: 5, text: "Wireless charging works great", isFake: true, x: 92, top: 70, delay: 4 },
-  { stars: 4, text: "Battery as advertised", isFake: false, x: 6, top: 30, delay: 2 },
-  { stars: 5, text: "30-hour battery!", isFake: true, x: 90, top: 25, delay: 6 },
-  { stars: 4, text: "Solid for the price", isFake: false, x: 3, top: 80, delay: 8 },
-];
-
-function FloatingReviews() {
+function Sphere({
+  left, top, size, color, duration, delay,
+}: {
+  left: string; top: string; size: number; color: string; duration: number; delay: number;
+}) {
   return (
-    <div className="absolute inset-0">
-      {REVIEW_CARDS.map((c, i) => (
-        <div
-          key={i}
-          className="absolute"
-          style={{
-            left: `${c.x}%`,
-            top: `${c.top}%`,
-            animation: `review-drift ${18 + i * 2}s ease-in-out ${c.delay}s infinite`,
-          }}
-        >
-          <div
-            className="px-3 py-2 rounded-lg shadow-sm border backdrop-blur-sm"
-            style={{
-              background: c.isFake ? "rgba(254, 226, 226, 0.7)" : "rgba(220, 252, 231, 0.7)",
-              borderColor: c.isFake ? "rgba(220, 38, 38, 0.25)" : "rgba(34, 197, 94, 0.25)",
-              minWidth: 130,
-            }}
-          >
-            <div className="flex items-center gap-1 text-xs">
-              <span style={{ color: c.isFake ? "#DC2626" : "#15803D" }}>
-                {"★".repeat(c.stars)}
-              </span>
-              <span
-                className="text-[9px] tracking-wider uppercase ml-1"
-                style={{ color: c.isFake ? "#DC2626" : "#15803D" }}
-              >
-                {c.isFake ? "fake" : "real"}
-              </span>
-            </div>
-            <div className="text-[10px] text-slate-600 mt-0.5 italic">{c.text}</div>
-          </div>
-        </div>
-      ))}
-    </div>
+    <div
+      className="absolute rounded-full"
+      style={{
+        left, top, width: size, height: size,
+        background: `radial-gradient(circle at 35% 30%, white, ${color} 45%, transparent 75%)`,
+        filter: "blur(8px)",
+        animation: `float-y ${duration}s ease-in-out ${delay}s infinite`,
+      }}
+    />
   );
 }
 
 // ────────────────────────────────────────────────────────────────────
-// Floating star ratings and X marks
+// 3D Review Card — tilted with perspective, floating
 // ────────────────────────────────────────────────────────────────────
-const MARKS = (() => {
-  let seed = 73;
-  const rand = () => {
-    seed = (seed * 9301 + 49297) % 233280;
-    return seed / 233280;
-  };
-  return Array.from({ length: 28 }, (_, i) => ({
-    x: rand() * 100,
-    delay: rand() * 30,
-    duration: 22 + rand() * 22,
-    size: 14 + rand() * 14,
-    isFake: i % 3 === 0,
-    isStar: i % 3 === 1,
-    rotation: rand() * 360,
-    keyframe: ["mark-float-a", "mark-float-b", "mark-float-c"][i % 3],
-  }));
-})();
-
-function FloatingMarks() {
+function Card3D({
+  left, top, stars, text, fake, rotateY, rotateX, duration, delay,
+}: {
+  left: string; top: string; stars: number; text: string; fake?: boolean; rotateY: number; rotateX: number; duration: number; delay: number;
+}) {
   return (
-    <div className="absolute inset-0">
-      {MARKS.map((p, i) => {
-        let symbol = "★";
-        let color = "rgba(252, 211, 77, 0.55)";
-        if (p.isFake) {
-          symbol = "✕";
-          color = "rgba(220, 38, 38, 0.45)";
-        } else if (p.isStar) {
-          symbol = "★";
-          color = "rgba(252, 211, 77, 0.55)";
-        } else {
-          symbol = "✓";
-          color = "rgba(34, 197, 94, 0.45)";
-        }
-        return (
-          <span
-            key={i}
-            className="absolute font-bold select-none"
-            style={{
-              left: `${p.x}%`,
-              bottom: -30,
-              fontSize: `${p.size}px`,
-              color,
-              transform: `rotate(${p.rotation}deg)`,
-              animation: `${p.keyframe} ${p.duration}s linear ${p.delay}s infinite`,
-              textShadow: "0 0 8px rgba(255,255,255,0.5)",
-            }}
-          >
-            {symbol}
+    <div
+      className="absolute"
+      style={{
+        left, top,
+        transformStyle: "preserve-3d",
+        ["--ry" as string]: `${rotateY}deg`,
+        ["--rx" as string]: `${rotateX}deg`,
+        animation: `card-float ${duration}s ease-in-out ${delay}s infinite`,
+      }}
+    >
+      <div
+        className="px-4 py-3 rounded-xl backdrop-blur-sm border shadow-2xl"
+        style={{
+          minWidth: 150,
+          background: fake ? "rgba(254, 226, 226, 0.85)" : "rgba(220, 252, 231, 0.85)",
+          borderColor: fake ? "rgba(220, 38, 38, 0.35)" : "rgba(34, 197, 94, 0.35)",
+          boxShadow: fake
+            ? "0 20px 40px -10px rgba(220, 38, 38, 0.3)"
+            : "0 20px 40px -10px rgba(34, 197, 94, 0.3)",
+        }}
+      >
+        <div className="flex items-center gap-1.5 mb-1">
+          <span style={{ color: fake ? "#DC2626" : "#15803D" }} className="text-sm">
+            {"★".repeat(stars)}
           </span>
-        );
-      })}
+          <span
+            className="text-[9px] tracking-wider uppercase px-1.5 py-0.5 rounded-full"
+            style={{
+              color: "white",
+              background: fake ? "#DC2626" : "#15803D",
+            }}
+          >
+            {fake ? "fake" : "real"}
+          </span>
+        </div>
+        <div className="text-[11px] text-slate-700 italic">&ldquo;{text}&rdquo;</div>
+      </div>
     </div>
   );
 }
 
 // ────────────────────────────────────────────────────────────────────
-// Scanning beam — radar-like horizontal sweep every few seconds
+// Scanning beam
 // ────────────────────────────────────────────────────────────────────
 function ScanBeam() {
   return (
     <div className="absolute inset-0">
       <motion.div
-        className="absolute left-0 right-0 h-[4px]"
+        className="absolute left-0 right-0 h-[3px]"
         style={{
-          background:
-            "linear-gradient(90deg, transparent, rgba(220, 38, 38, 0.7), rgba(252, 211, 77, 0.85), rgba(220, 38, 38, 0.7), transparent)",
-          boxShadow: "0 0 30px rgba(220, 38, 38, 0.6), 0 0 60px rgba(252, 211, 77, 0.4)",
+          background: "linear-gradient(90deg, transparent, rgba(220, 38, 38, 0.6), rgba(252, 211, 77, 0.8), rgba(220, 38, 38, 0.6), transparent)",
+          boxShadow: "0 0 25px rgba(220, 38, 38, 0.5), 0 0 50px rgba(252, 211, 77, 0.35)",
         }}
-        animate={{
-          top: ["-2%", "102%"],
-          opacity: [0, 1, 1, 0],
-        }}
-        transition={{
-          duration: 4,
-          repeat: Infinity,
-          repeatDelay: 3,
-          ease: "linear",
-          times: [0, 0.05, 0.95, 1],
-        }}
+        animate={{ top: ["-2%", "102%"], opacity: [0, 1, 1, 0] }}
+        transition={{ duration: 5, repeat: Infinity, repeatDelay: 4, ease: "linear", times: [0, 0.06, 0.94, 1] }}
       />
     </div>
   );
