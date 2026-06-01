@@ -18,7 +18,7 @@ import re
 from collections import defaultdict
 from datetime import datetime, date
 from typing import Optional
-import numpy as np
+import math
 from app.models.schemas import Review, BurstEvent, L2Result, Flag
 from app.logger import get_logger
 
@@ -113,15 +113,16 @@ def _parse_date(date_str: str) -> Optional[date]:
 
 
 def _compute_z_scores(counts: list[int]) -> list[float]:
-    """Compute z-scores for a list of counts."""
+    """Compute z-scores using pure Python (no numpy)."""
     if len(counts) < 2:
         return [0.0] * len(counts)
-    arr = np.array(counts, dtype=float)
-    mean = np.mean(arr)
-    std = np.std(arr)
+    n = len(counts)
+    mean = sum(counts) / n
+    variance = sum((x - mean) ** 2 for x in counts) / n
+    std = math.sqrt(variance)
     if std == 0:
-        return [0.0] * len(counts)
-    return list((arr - mean) / std)
+        return [0.0] * n
+    return [(x - mean) / std for x in counts]
 
 
 def run_l2(reviews: list[Review]) -> L2Result:
