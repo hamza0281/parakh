@@ -1,0 +1,21 @@
+services:
+  - type: web
+    name: parakh-api
+    runtime: python
+    rootDir: api
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: GROQ_API_KEY
+        sync: false
+      - key: GEMINI_API_KEY
+        sync: false
+      - key: HF_API_KEY
+        sync: false
+      - key: REDIS_URL
+        sync: false
+      - key: CORS_ORIGINS
+        value: http://localhost:3000,https://parakh.vercel.app
+      - key: RATE_LIMIT_PER_MIN
+        value: "30"
+    healthCheckPath: /api/v1/health
